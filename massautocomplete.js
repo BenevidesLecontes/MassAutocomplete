@@ -344,8 +344,8 @@ angular.module('MassAutoComplete', [])
                 var totalValues = el.value;
                 selected = set_selection(i);
                 last_selected_value = selected.value;
-                var temp = totalValues.slice(spacePosition + value.length);
-                totalValues = totalValues.slice(0, spacePosition) + '[-- ' + last_selected_value + ' --]' + temp;
+                var tempTotal = totalValues.slice(spacePosition + value.length);
+                totalValues = totalValues.slice(0, spacePosition) + '[-- ' + last_selected_value + ' --]' + tempTotal;
                 var delta = last_selected_value.length - value.length;
                 var caret = pos + 8 + delta;
                 totalValues = totalValues.slice(0, caret) + ' ' + totalValues.slice(caret, totalValues.length);
