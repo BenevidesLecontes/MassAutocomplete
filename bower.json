@@ -1,7 +1,7 @@
 {
-  "name": "angular-mass-autocomplete",
+  "name": "angular-mass-autocomplete-advanced",
   "version": "0.4.0",
-  "main": "massautocomplete.min.js",
+  "main": "massautocomplete.js",
   "dependencies": {
     "angular": ">=1.5.8",
     "highlightjs": ">=9.6.0"

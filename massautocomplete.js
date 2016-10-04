@@ -267,7 +267,7 @@ angular.module('MassAutoComplete', [])
               current_element.unbind(config.EVENTS.KEYDOWN, bound_events[config.EVENTS.KEYDOWN]);
               current_element.unbind(config.EVENTS.BLUR, bound_events[config.EVENTS.BLUR]);
               if (current_element_random_id_set) {
-                current_element[0].removeAttribute('id');
+                // current_element[0].removeAttribute('id');
               }
             }
             hide_autocomplete();
@@ -318,7 +318,7 @@ angular.module('MassAutoComplete', [])
               return;
             }
 
-            var selected ='';
+            var selected = '';
             if (current_options.multi_select) {
               var el = current_element[0];
               var term = el.value;
@@ -328,8 +328,11 @@ angular.module('MassAutoComplete', [])
                 el.selectionStart = $scope.selectionStart;
                 $scope.EnterKey = false;
               }
+              if (current_options.from_scope){
+                el.selectionStart = current_options.selStart;
+              }
               var pos = term.slice(0, el.selectionStart).length;
-              if (pos > 0 && term.charAt(pos - 1) !== ' ' && (term.charAt(pos) === ' ' || term.charAt(pos) === '')) {
+              if (current_options.from_scope || (pos > 0 && term.charAt(pos - 1) !== ' ' && (term.charAt(pos) === ' ' || term.charAt(pos) === ''))) {
                 var temp = term.slice(0, pos);
                 for (var j = pos; j >= 0; j--) {
                   if (temp.charAt(j) === ' ') {
@@ -348,14 +351,19 @@ angular.module('MassAutoComplete', [])
                 totalValues = totalValues.slice(0, spacePosition) + '[-- ' + last_selected_value + ' --]' + tempTotal;
                 var delta = last_selected_value.length - value.length;
                 var caret = pos + 8 + delta;
-                totalValues = totalValues.slice(0, caret) + ' ' + totalValues.slice(caret, totalValues.length);
+                if (!current_options.from_scope){
+                  totalValues = totalValues.slice(0, caret) + ' ' + totalValues.slice(caret, totalValues.length);
+                }
                 el.focus();
                 update_model_value(totalValues);
-                el.setSelectionRange(caret + 1, caret + 1);
+                if (!current_options.from_scope) {
+                  el.setSelectionRange(caret + 1, caret + 1);
+                }
                 hide_autocomplete();
                 selected.value = totalValues;
+                current_options.from_scope = false;
               }
-            }else {
+            } else {
               selected = set_selection(i);
               last_selected_value = selected.value;
               update_model_value(selected.value);
