@@ -1,11 +1,11 @@
 {
-  "name": "angular-mass-autocomplete",
-  "version": "0.4.0",
+  "name": "angular-mass-autocomplete-advanced",
+  "version": "1.4.0",
   "description": "Autocomplete for Angular.js applications with a lot to complete",
   "main": "massautocomplete.js",
   "repository": {
     "type": "git",
-    "url": "https://github.com/hakib/MassAutocomplete"
+    "url": "https://github.com/BenevidesLecontes/MassAutocomplete-advanced"
   },
   "keywords": [
     "angularjs",
