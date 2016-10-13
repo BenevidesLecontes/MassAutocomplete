@@ -102,7 +102,7 @@ angular.module('MassAutoComplete', [])
               value_watch,
               last_selected_value,
               current_element_random_id_set;
-
+          var counter =[];
           $scope.show_autocomplete = false;
 
           function show_autocomplete() {
@@ -325,11 +325,11 @@ angular.module('MassAutoComplete', [])
               var value = '';
               var spacePosition = 0;
               if ($scope.EnterKey) {
-                el.selectionStart = $scope.selectionStart;
+                el.selectionStart = current_options.selStart;
                 $scope.EnterKey = false;
               }
               if (current_options.from_scope){
-                el.selectionStart = current_options.selStart;
+                el.selectionStart = current_options.selStart + 1;
               }
               var pos = term.slice(0, el.selectionStart).length;
               if (current_options.from_scope || (pos > 0 && term.charAt(pos - 1) !== ' ' && (term.charAt(pos) === ' ' || term.charAt(pos) === ''))) {
@@ -348,9 +348,9 @@ angular.module('MassAutoComplete', [])
                 selected = set_selection(i);
                 last_selected_value = selected.value;
                 var tempTotal = totalValues.slice(spacePosition + value.length);
-                totalValues = totalValues.slice(0, spacePosition) + '[-- ' + last_selected_value + ' --]' + tempTotal;
+                totalValues = totalValues.slice(0, spacePosition) + last_selected_value + tempTotal;
                 var delta = last_selected_value.length - value.length;
-                var caret = pos + 8 + delta;
+                var caret = pos + delta;
                 if (!current_options.from_scope){
                   totalValues = totalValues.slice(0, caret) + ' ' + totalValues.slice(caret, totalValues.length);
                 }
@@ -426,6 +426,7 @@ angular.module('MassAutoComplete', [])
                     // the input itself.
                     e.stopPropagation();
                     e.preventDefault();
+                    counter = [];
                   }
 
                   hide_autocomplete();
@@ -446,6 +447,8 @@ angular.module('MassAutoComplete', [])
                 // bottom wrap to top.
                 /* falls through */
                 case config.KEYS.DOWN:
+                  counter.push(current_element[0].selectionStart);
+                  current_options.selStart = counter[0];
                   $scope.selectionStart = e.target.selectionStart;
                   if ($scope.results.length > 0) {
                     if ($scope.show_autocomplete) {
