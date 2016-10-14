@@ -103,6 +103,7 @@ angular.module('MassAutoComplete', [])
               last_selected_value,
               current_element_random_id_set;
           var counter =[];
+          
           $scope.show_autocomplete = false;
 
           function show_autocomplete() {
